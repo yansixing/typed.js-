@@ -26,7 +26,7 @@
 ! function($) {
 
     "use strict";
-
+//采用构造函数和原型链组合模式，将实例共用的方法挂载到原型链上，特有的属性包含在构造函数
     var Typed = function(el, options) {
 
         // chosen element to manipulate text
@@ -95,6 +95,8 @@
 
         // All systems go!
         this.build();
+        //console.log(this)                                                     //Typed {el: jQuery.fn.init[1], options: Object, isInput: false, attr: null, showCursor: true…}
+        //console.log(this.el)                                                  //[span#typed]
     };
 
       Typed.prototype = {
@@ -118,8 +120,8 @@
 
         build: function() {
             var self = this;
-            // Insert cursor
-            if (this.showCursor === true) {
+            // Insert cursor                                                    //插入光标，可以在defaults自定义cursorChar
+            if (this.showCursor === true) {                                     //刚看到这个插件就疑问光标怎么一直跟在文字后面的，原来只有三行代码就实现了
                 this.cursor = $("<span class=\"typed-cursor\">" + this.cursorChar + "</span>");
                 this.el.after(this.cursor);
             }
@@ -391,12 +393,17 @@
     };
 
     $.fn.typed = function(option) {
+        //console.log(this)                                                     //this➡️span#typed
         return this.each(function() {
-            var $this = $(this),
-                data = $this.data('typed'),
-                options = typeof option == 'object' && option;
+            var $this = $(this),                                                //这里this指向span标签，使用$将其转换为jQuery对象
+                data = $this.data('typed'),                                     //data == undefined
+                options = typeof option == 'object' && option;                  //这里祢补了我知识上的漏洞，当&&运算符用于非布尔型之间运算时也可以返回一个非布尔型值，这里options返回参数option对象 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Logical_Operators
+            //console.log(this)                                                 //this➡️span
+            //console.log(data)                                                 //undefined
+            //console.log(options)                                              //Object {strings: Array[4], typeSpeed: 50, backDelay: 1000, loop: false, contentType: "html"…}
             if (data) { data.reset(); }
-            $this.data('typed', (data = new Typed(this, options)));
+            $this.data('typed', (data = new Typed(this, options)));             //将span标签传入原型链储存在this.el
+            //console.log(data.el)                                              data.el➡️span#typed
             if (typeof option == 'string') data[option]();
         });
     };
