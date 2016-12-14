@@ -400,7 +400,7 @@
                 options = typeof option == 'object' && option;                  //这里祢补了我知识上的漏洞，当&&运算符用于非布尔型之间运算时也可以返回一个非布尔型值，这里options返回参数option对象 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Logical_Operators
             //console.log(this)                                                 //this➡️span
             //console.log(data)                                                 //undefined
-            //console.log(options)                                              //Object {strings: Array[4], typeSpeed: 50, backDelay: 1000, loop: false, contentType: "html"…}
+            console.log(options)                                              //Object {strings: Array[4], typeSpeed: 50, backDelay: 1000, loop: false, contentType: "html"…}
             if (data) { data.reset(); }
             $this.data('typed', (data = new Typed(this, options)));             //将span标签传入原型链储存在this.el
             //console.log(data.el)                                              //data.el➡️span#typed
