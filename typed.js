@@ -403,7 +403,7 @@
             //console.log(options)                                              //Object {strings: Array[4], typeSpeed: 50, backDelay: 1000, loop: false, contentType: "html"…}
             if (data) { data.reset(); }
             $this.data('typed', (data = new Typed(this, options)));             //将span标签传入原型链储存在this.el
-            //console.log(data.el)                                              data.el➡️span#typed
+            //console.log(data.el)                                              //data.el➡️span#typed
             if (typeof option == 'string') data[option]();
         });
     };
