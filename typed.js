@@ -117,9 +117,9 @@
                 self.typewrite(self.strings[self.sequence[self.arrayPos]], self.strPos);
             }, self.startDelay);
         },
-
+        //build函数：1、添加光标span元素到html 2、
         build: function() {
-            var self = this;
+            var self = this;                                                    //self指向Typed对象
             // Insert cursor                                                    //插入光标，可以在defaults自定义cursorChar
             if (this.showCursor === true) {                                     //刚看到这个插件就疑问光标怎么一直跟在文字后面的，原来只有三行代码就实现了
                 this.cursor = $("<span class=\"typed-cursor\">" + this.cursorChar + "</span>");
@@ -131,8 +131,10 @@
                 console.log(this.stringsElement.children());
                 var strings = this.stringsElement.children();
                 $.each(strings, function(key, value) {
+                    //console.log(this)                                         这儿的this是输出四次分别指向4个标签的，不太理解
                     self.strings.push($(value).html());
                 });
+                // self.strings = strings;                                      深度复制？mark
             }
             this.init();
         },
@@ -393,22 +395,22 @@
     };
 
     $.fn.typed = function(option) {
-        //console.log(this)                                                     //this➡️span#typed
+        console.log(this)                                                     //this[0]➡️span#typed
         return this.each(function() {
             var $this = $(this),                                                //这里this指向span标签，使用$将其转换为jQuery对象
                 data = $this.data('typed'),                                     //data == undefined
                 options = typeof option == 'object' && option;                  //这里祢补了我知识上的漏洞，当&&运算符用于非布尔型之间运算时也可以返回一个非布尔型值，这里options返回参数option对象 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Logical_Operators
             //console.log(this)                                                 //this➡️span
             //console.log(data)                                                 //undefined
-            console.log(options)                                              //Object {strings: Array[4], typeSpeed: 50, backDelay: 1000, loop: false, contentType: "html"…}
+            //console.log(options)                                              //Object {strings: Array[4], typeSpeed: 50, backDelay: 1000, loop: false, contentType: "html"…}
             if (data) { data.reset(); }
             $this.data('typed', (data = new Typed(this, options)));             //将span标签传入原型链储存在this.el
-            //console.log(data.el)                                              //data.el➡️span#typed
+            //console.log(data.el)                                              data.el➡️span#typed
             if (typeof option == 'string') data[option]();
         });
     };
 
-    $.fn.typed.defaults = {
+    $.fn.typed.defaults = {                                                     //一些非关键的默认值的设定是由原型链查找完成的
         strings: ["These are the default values...", "You know what you should do?", "Use your own!", "Have a great day!"],
         stringsElement: null,
         // typing speed
