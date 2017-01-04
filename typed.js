@@ -110,7 +110,7 @@
             self.timeout = setTimeout(function() {
                 for (var i = 0; i < self.strings.length; ++i) self.sequence[i] = i;
 
-                // shuffle the array if true
+                // shuffle the array if true                                    //打乱数组顺序
                 if (self.shuffle) self.sequence = self.shuffleArray(self.sequence);
 
                 // Start typing
