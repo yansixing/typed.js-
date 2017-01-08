@@ -23,7 +23,7 @@
 
 
 
-! function($) {
+// ! function($) {
 
     "use strict";
 //采用构造函数和原型链组合模式，将实例共用的方法挂载到原型链上，特有的属性包含在构造函数
@@ -110,6 +110,7 @@
             self.timeout = setTimeout(function() {
                 for (var i = 0; i < self.strings.length; ++i) self.sequence[i] = i;
 
+
                 // shuffle the array if true                                    //打乱数组顺序
                 if (self.shuffle) self.sequence = self.shuffleArray(self.sequence);
 
@@ -139,7 +140,7 @@
             this.init();
         },
 
-        // pass current string state to each function, types 1 char per call
+        // pass current string state to each function, types 1 char per call    //传递当前字符串状态到每个函数，每次调用打印一个字符
         typewrite: function(curString, curStrPos) {
             // exit when stopped
             if (this.stop === true) {
@@ -170,6 +171,7 @@
                     var skip = 1; // skip atleast 1
                     if (/^\^\d+/.test(substr)) {
                         substr = /\d+/.exec(substr)[0];
+                        //console.log(substr);
                         skip += substr.length;
                         charPause = parseInt(substr);
                     }
@@ -180,7 +182,7 @@
 
                 if (self.contentType === 'html') {
                     // skip over html tags while typing
-                    var curChar = curString.substr(curStrPos).charAt(0)
+                    var curChar = curString.substr(curStrPos).charAt(0);
                     if (curChar === '<' || curChar === '&') {
                         var tag = '';
                         var endTag = '';
@@ -446,4 +448,4 @@
     };
 
 
-}(window.jQuery);
+// }(window.jQuery);
