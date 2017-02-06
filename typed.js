@@ -33,7 +33,7 @@
         this.el = $(el);
 
         // options
-        this.options = $.extend({}, $.fn.typed.defaults, options);
+        this.options = $.extend({}, $.fn.typed.defaults, options);              //用extends方法将defaults和options对象的属性合并到一个空对象中
 
         // attribute to type into
         this.isInput = this.el.is('input');
@@ -99,7 +99,7 @@
         //console.log(this.el)                                                  //[span#typed]
     };
 
-      Typed.prototype = {
+    Typed.prototype = {
 
         constructor: Typed,
 
@@ -123,7 +123,7 @@
             var self = this;                                                    //self指向Typed对象
             // Insert cursor                                                    //插入光标，可以在defaults自定义cursorChar
             if (this.showCursor === true) {                                     //刚看到这个插件就疑问光标怎么一直跟在文字后面的，原来只有三行代码就实现了
-                this.cursor = $("<span class=\"typed-cursor\">" + this.cursorChar + "</span>");
+                this.cursor = $("<span class=\"typed-cursor\">" + this.cursorChar + "</span>");   //查了下文档，jQuery核心API支持这种隐式的解析html字符串方法，等同于显式的$.parseHTML()方法
                 this.el.after(this.cursor);
             }
             if (this.stringsElement) {
@@ -132,10 +132,8 @@
                 console.log(this.stringsElement.children());
                 var strings = this.stringsElement.children();
                 $.each(strings, function(key, value) {
-                    //console.log(this)                                         这儿的this是输出四次分别指向4个标签的，不太理解
                     self.strings.push($(value).html());
-                });
-                // self.strings = strings;                                      深度复制？mark
+                });                                  
             }
             this.init();
         },
@@ -397,10 +395,9 @@
     };
 
     $.fn.typed = function(option) {
-        console.log($("#typed"));                                                     //this[0]➡️span#typed
+        console.log($("#typed"));                                               //this[0]➡️span#typed
         console.log(this);
-        var i=0;
-        return this.each(function() {                                           //这儿为何要用一个each方法？
+        return this.each(function() {                                           //这儿为何要用一个each方法？因为这个插件本来就是支持多行文本同时输出的，只是作者没有有意提到，这个功能用的人很少
             var $this = $(this),                                                //这里this指向span标签，使用$将其转换为jQuery对象
                 data = $this.data('typed'),                                     //data == undefined
                 options = typeof option == 'object' && option;                  //这里祢补了我知识上的漏洞，当&&运算符用于非布尔型之间运算时也可以返回一个非布尔型值，这里options返回参数option对象 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Logical_Operators
