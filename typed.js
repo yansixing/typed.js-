@@ -99,7 +99,7 @@
         //console.log(this.el)                                                  //[span#typed]
     };
 
-    Typed.prototype = {
+      Typed.prototype = {
 
         constructor: Typed,
 
@@ -132,8 +132,10 @@
                 console.log(this.stringsElement.children());
                 var strings = this.stringsElement.children();
                 $.each(strings, function(key, value) {
+                    //console.log(this)                                         这儿的this是输出四次分别指向4个标签的，不太理解
                     self.strings.push($(value).html());
-                });                                  
+                });
+                // self.strings = strings;                                      深度复制？mark
             }
             this.init();
         },
@@ -180,7 +182,7 @@
 
                 if (self.contentType === 'html') {
                     // skip over html tags while typing
-                    var curChar = curString.substr(curStrPos).charAt(0);
+                    var curChar = curString.substr(curStrPos).charAt(0);        //curChar当前字符
                     if (curChar === '<' || curChar === '&') {
                         var tag = '';
                         var endTag = '';
@@ -395,8 +397,6 @@
     };
 
     $.fn.typed = function(option) {
-        console.log($("#typed"));                                               //this[0]➡️span#typed
-        console.log(this);
         return this.each(function() {                                           //这儿为何要用一个each方法？因为这个插件本来就是支持多行文本同时输出的，只是作者没有有意提到，这个功能用的人很少
             var $this = $(this),                                                //这里this指向span标签，使用$将其转换为jQuery对象
                 data = $this.data('typed'),                                     //data == undefined
